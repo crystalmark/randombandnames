@@ -102,3 +102,17 @@ dist
 
 # TernJS port file
 .tern-port
+
+.history
+node_modules
+build/
+output.json
+.idea
+pipeline/dist
+.stryker-tmp
+reports
+.cdk.staging
+cdk.out
+coverage
+dist
+bandnames-stack.yaml

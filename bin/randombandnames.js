@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("source-map-support/register");
+const cdk = require("@aws-cdk/core");
+const randombandnames_stack_1 = require("../lib/randombandnames-stack");
+const app = new cdk.App();
+new randombandnames_stack_1.RandombandnamesStack(app, 'RandombandnamesStack');
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmFuZG9tYmFuZG5hbWVzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsicmFuZG9tYmFuZG5hbWVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLHVDQUFxQztBQUNyQyxxQ0FBcUM7QUFDckMsd0VBQW9FO0FBRXBFLE1BQU0sR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLEdBQUcsRUFBRSxDQUFDO0FBQzFCLElBQUksNENBQW9CLENBQUMsR0FBRyxFQUFFLHNCQUFzQixDQUFDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIjIS91c3IvYmluL2VudiBub2RlXG5pbXBvcnQgJ3NvdXJjZS1tYXAtc3VwcG9ydC9yZWdpc3Rlcic7XG5pbXBvcnQgKiBhcyBjZGsgZnJvbSAnQGF3cy1jZGsvY29yZSc7XG5pbXBvcnQgeyBSYW5kb21iYW5kbmFtZXNTdGFjayB9IGZyb20gJy4uL2xpYi9yYW5kb21iYW5kbmFtZXMtc3RhY2snO1xuXG5jb25zdCBhcHAgPSBuZXcgY2RrLkFwcCgpO1xubmV3IFJhbmRvbWJhbmRuYW1lc1N0YWNrKGFwcCwgJ1JhbmRvbWJhbmRuYW1lc1N0YWNrJyk7XG4iXX0=
