@@ -9,8 +9,8 @@ export class BandNamesService extends core.Construct {
 
     const handler = new lambda.Function(this, "BandNameHandler", {
       runtime: lambda.Runtime.NODEJS_10_X,
-      code: lambda.Code.asset("resources"),
-      handler: "bandnames.handler",
+      code: lambda.Code.asset("build/randombandnames"),
+      handler: "index.handler",
       environment: {
       }
     });

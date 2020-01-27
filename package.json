@@ -18,7 +18,9 @@
     "aws-cdk": "^1.21.1",
     "builtin-modules": "^3.1.0",
     "jest": "^24.9.0",
+    "source-map-support": "^0.5.16",
     "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.1.0",
     "typescript": "~3.7.2",
     "webpack": "^4.41.5",
@@ -30,6 +32,6 @@
     "@aws-cdk/core": "^1.21.1",
     "@types/node-fetch": "^2.5.4",
     "beautiful-dom": "^1.0.7",
-    "source-map-support": "^0.5.16"
+    "node-fetch": "^2.6.0"
   }
 }

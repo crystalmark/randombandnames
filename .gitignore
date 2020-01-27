@@ -116,3 +116,8 @@ cdk.out
 coverage
 dist
 bandnames-stack.yaml
+
+src/**/*.js
+src/**/*.d.ts
+bin/*.js
+bin/*.d.ts
