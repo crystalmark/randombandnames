@@ -1,5 +1,15 @@
 import fetch from 'node-fetch';
+import { SentenceManipulator } from './sentencemanipulator';
+import { BandNamesService } from '../../lib/bandnames_service';
 const BeautifulDom = require('beautiful-dom');
+
+class BandName {
+    origin: string; name: string;
+    constructor(origin: string, name: string) {
+        this.origin = origin;
+        this.name = name;
+    }
+};
 
 const specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.'\"";
 
@@ -7,123 +17,65 @@ export const handler = async (event: any = {}): Promise<any> => {
 
 
     var randomUrl = 'https://en.wikipedia.org/wiki/Special:Random';
-    const response = await fetch(randomUrl)
-    const body = await response.text();
-    const dom = new BeautifulDom(body);
 
-    const paragraphs = dom.getElementsByTagName("p");
-
-    var bandnames = new Array<String>();
+    var bandnames: BandName[] = [];
     var counter = 0;
 
-    while (bandnames.length < 5 && counter++ < 5) {
-        const sentences = flatten(paragraphs
-            .map((paragraph: { innerHTML: string; }) => {
-                return clean(paragraph.innerHTML);
-            })
-            .map((paragraph: string) => {
-                return separateSentences(paragraph);
-            }))
-            .map((sentence: string) => {
-                return firstWords(sentence);
-            })
-            .map((sentence: string) => {
-                return addThe(sentence);
-            })
-            .filter((sentence: string) => {
-                return sentence.length > 2;
-            })
-            .filter((sentence: string) => {
-                return removeSmalls(sentence);
-            })
-            .map((sentence: string) => {
-                return capitalize(sentence);
-            })
-            .filter((sentence: string) => {
-                return sentence != "The " && sentence != "The";
-            })
-            ;
+    const sm = new SentenceManipulator();
 
-        bandnames = bandnames.concat(sentences);
+    while (bandnames.length < 10 && counter++ < 5) {
+        const response = await fetch(randomUrl);
+        const body = await response.text();
+        const dom = new BeautifulDom(body);
+        const paragraphs = dom.getElementsByTagName("p");
+
+        const sentences =
+            sm.flatten(paragraphs
+                .map((p: any) => p.innerHTML)
+                .map((p: string) => sm.separateSentences(p))
+            )
+                .map(p => sm.clean(p))
+                .map(s => sm.firstWords(s))
+                .map(s => sm.addThe(s))
+                .map(s => sm.removeSmalls(s))
+                .filter(s => s.length > 2)
+                .map(s => sm.capitalize(s))
+                .filter(s => s != "The " && s != "The")
+                .filter(function (s: string, index: number, self: string | string[]) {
+                    return index == self.indexOf(s);
+                })
+                .slice(0, 5);
+
+        bandnames = bandnames.concat(toBandnames(sentences, response.url));
     }
 
-    console.log(JSON.stringify(bandnames.slice(0, 5)));
+    bandnames = shuffle(bandnames);
+
+    // console.log("Total created " + bandnames.length);
+    // console.log(JSON.stringify(bandnames.slice(0, 5)));
 
     return { "isBase64Encoded": false, headers: {}, statusCode: 200, body: JSON.stringify(bandnames.slice(0, 5)) };
 };
 
-function clean(text: string) {
-    return text.replace(/<\/?[^>]+(>|$)/g, "").replace("/&#..;/g", "");
+function toBandnames(sentences: string[], origin: string) {
+    return sentences.map(s => new BandName(origin, s));
 }
 
-function separateSentences(text: string) {
-    return text.split("\. ").map((t: string) => t.trim()).filter((t: string) => t.length > 1);
-}
+function shuffle(bandnames: any[]) {
+    var currentIndex = bandnames.length, temporaryValue, randomIndex;
 
-function flatten(array: Array<any>) {
-    var flatarray = new Array<string>();
-    array.forEach(element => flatarray = flatarray.concat(element));
-    return flatarray;
-}
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
 
-function firstWords(sentence: string) {
-    const words = sentence.split(" ");
-    var count = 1;
-    if (words.length > 2) {
-        if (words.length <= 5) {
-            count = Math.random() * words.length;
-        }
-        else {
-            count = Math.random() * 5;
-        }
-        return words.slice(0, count).join(" ");
-    }
-    else {
-        return sentence;
-    }
-}
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
 
-function addThe(sentence: string) {
-    if (sentence.toLowerCase().startsWith("the ")) {
-        if (Math.random() < 0.5) {
-            return sentence.substring(4);
-        }
-        else {
-            return sentence;
-        }
-    }
-    else {
-        if (Math.random() < 0.2) {
-            return "The " + sentence;
-        }
-        else {
-            return sentence;
-        }
-    }
-}
-
-function capitalize(sentence: string) {
-    return (sentence.toLowerCase().replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); }));
-};
-
-const smalls = ['at', 'i', 'in', 'a', 'of', 'it', 'are', 'or', 'and', 'to', 'he', 'was', 'is']
-function removeSmalls(sentence: string) {
-    var clean = String(sentence.toLowerCase);
-    var found = true;
-    while (found) {
-        smalls.forEach(word => {
-            if (clean.startsWith(word + " ")) {
-                clean = clean.substr(word.length + 1);
-                found = true;
-            } else found = false;
-
-            if (clean.endsWith(" " + word)) {
-                clean = clean.substr(0, clean.length - word.length + 1);
-                found = true;
-            } else found = false;
-
-        });
+        // And swap it with the current element.
+        temporaryValue = bandnames[currentIndex];
+        bandnames[currentIndex] = bandnames[randomIndex];
+        bandnames[randomIndex] = temporaryValue;
     }
 
-    return clean.toString;
+    return bandnames;
 }
