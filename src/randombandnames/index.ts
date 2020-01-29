@@ -37,8 +37,10 @@ export const handler = async (event: any = {}): Promise<any> => {
                 .map(p => sm.clean(p))
                 .map(s => sm.firstWords(s))
                 .map(s => sm.addThe(s))
+                .map(s => sm.removeThe(s))
                 .map(s => sm.removeSmalls(s))
                 .filter(s => s.length > 2)
+                .map(s => sm.pluralize(s))
                 .map(s => sm.capitalize(s))
                 .filter(s => s != "The " && s != "The")
                 .filter(function (s: string, index: number, self: string | string[]) {

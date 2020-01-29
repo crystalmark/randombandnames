@@ -32,6 +32,7 @@
     "@aws-cdk/core": "^1.21.1",
     "@types/node-fetch": "^2.5.4",
     "beautiful-dom": "^1.0.7",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "pluralize": "^8.0.0"
   }
 }

@@ -1,3 +1,5 @@
+var pluralize = require('pluralize')
+
 export class SentenceManipulator {
 
     constructor() {
@@ -54,6 +56,12 @@ export class SentenceManipulator {
         return words.slice(0, count).join(" ");
     }
 
+    public removeThe(sentence: string) {
+        if (sentence.toLowerCase().endsWith(" the")) {
+            return sentence.substr(0, sentence.length - 4);
+        } else return sentence;
+    }
+
     public addThe(sentence: string) {
         if (sentence.toLowerCase().startsWith("the ")) {
             if (this.random(100) < 50) {
@@ -94,5 +102,15 @@ export class SentenceManipulator {
 
     private random(max: number): number {
         return Math.floor(Math.random() * max);
+    }
+
+    public pluralize(sentence: string) {
+        if (this.random(100) > 33) {
+            const words = sentence.split(' ');
+            const i = words.length - 1;
+            words[i] = pluralize(words[i]);
+            return words.join(' ');
+        }
+        else return sentence;
     }
 }

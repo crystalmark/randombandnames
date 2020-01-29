@@ -52,6 +52,8 @@ test('Remove Small Words', () => {
   const test = 'Timmy he woz ere at home in Yorkshire';
   const expected = 'Timmy woz ere home Yorkshire'
 
+  // Lambda.handler();
+
   const sm = new SentenceManipulator();
   return expect(sm.removeSmalls(test)).toEqual(expected);
 
