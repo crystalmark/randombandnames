@@ -119,5 +119,6 @@ bandnames-stack.yaml
 
 src/**/*.js
 src/**/*.d.ts
+lib/**/*.d.ts
 bin/*.js
 bin/*.d.ts

@@ -12,10 +12,9 @@
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.21.1",
-    "@types/jest": "^24.0.22",
-    "@types/node": "10.17.5",
-    "aws-cdk": "^1.21.1",
+    "@aws-cdk/assert": "^1.22.0",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^10.17.14",
     "builtin-modules": "^3.1.0",
     "jest": "^24.9.0",
     "source-map-support": "^0.5.16",
@@ -27,9 +26,10 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.21.1",
-    "@aws-cdk/aws-lambda": "^1.21.1",
-    "@aws-cdk/core": "^1.21.1",
+    "@aws-cdk/aws-apigateway": "^1.22.0",
+    "@aws-cdk/aws-lambda": "^1.22.0",
+    "@aws-cdk/aws-s3-deployment": "^1.22.0",
+    "@aws-cdk/core": "^1.22.0",
     "@types/node-fetch": "^2.5.4",
     "beautiful-dom": "^1.0.7",
     "node-fetch": "^2.6.0",
